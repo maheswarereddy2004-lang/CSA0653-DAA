@@ -1,0 +1,32 @@
+NAME:P.MOKSHITH REDDY
+REG NO:192425149
+
+                             Q1:COMPARING GREEDY AND DYNAMIC PROGRAMMING FOR INVESTMENT PROTFOLIO OPTIMIZATION
+
+# Investment Portfolio Optimization using Dynamic Programming
+investments = ['A', 'B', 'C', 'D']
+capital = [20000, 30000, 40000, 50000]
+returns = [25000, 40000, 50000, 70000]
+budget = 80000
+n = len(investments)
+dp = [[0]*(budget+1) for _ in range(n+1)]
+for i in range(1, n+1):
+    for j in range(budget+1):
+        if capital[i-1] <= j:
+            dp[i][j] = max(returns[i-1] + dp[i-1][j-capital[i-1]], dp[i-1][j])
+        else:
+            dp[i][j] = dp[i-1][j]
+selected = []
+j = budget
+for i in range(n, 0, -1):
+    if dp[i][j] != dp[i-1][j]:
+        selected.append(investments[i-1])
+        j -= capital[i-1]
+selected.reverse()
+total_capital = sum(capital[investments.index(x)] for x in selected)
+print("Selected Investments:", selected)
+print("Total Capital Used: Rs.", total_capital)
+print("Maximum Expected Return: Rs.", dp[n][budget])
+
+
+                              
