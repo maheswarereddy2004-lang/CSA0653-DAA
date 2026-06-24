@@ -1,0 +1,41 @@
+NAME:P.MOKSHITH REDDY
+REG NO: 192425149
+
+Q1: Job Scheduling using Backtracking (NP-Hard Problem)
+
+# Number of employees and jobs
+EMP = 3
+JOB = 3
+skill = [
+    [1, 1, 0],
+    [1, 0, 1],
+    [0, 1, 1]
+]
+deadline = [4, 6, 5]
+duration = [2, 3, 2]
+assigned = [False] * EMP
+result = [-1] * JOB
+def schedule_job(job):
+    if job == JOB:
+        return True
+    for emp in range(EMP):
+        if not assigned[emp] and skill[emp][job] == 1:
+
+            # Check deadline constraint
+            if duration[job] <= deadline[job]:
+                assigned[emp] = True
+                result[job] = emp
+
+                if schedule_job(job + 1):
+                    return True
+
+                # Backtrack
+                assigned[emp] = False
+                result[job] = -1
+    return False
+if schedule_job(0):
+    print("Feasible Job Assignment:")
+    for i in range(JOB):
+        print(f"Job {i+1} assigned to Employee {result[i]+1}")
+else:
+    print("No feasible assignment exists.")
