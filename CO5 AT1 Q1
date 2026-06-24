@@ -20,16 +20,11 @@ def schedule_job(job):
         return True
     for emp in range(EMP):
         if not assigned[emp] and skill[emp][job] == 1:
-
-            # Check deadline constraint
             if duration[job] <= deadline[job]:
                 assigned[emp] = True
                 result[job] = emp
-
                 if schedule_job(job + 1):
                     return True
-
-                # Backtrack
                 assigned[emp] = False
                 result[job] = -1
     return False
